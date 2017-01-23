@@ -1,0 +1,24 @@
+<launch>
+  <node pkg="usb_cam" type="usb_cam_node" name="webcam_right">
+    <param name="video_device" type="str" value="/dev/video0" />
+
+    <param name="image_width" type="int" value="640" />
+    <param name="image_height" type="int" value="480" />
+
+    <param name="camera_frame_id" type="str" value="right_eye_frame" />
+  </node>
+
+  <node pkg="usb_cam" type="usb_cam_node" name="webcam_left">
+    <param name="video_device" type="str" value="/dev/video0" />
+
+    <param name="image_width" type="int" value="640" />
+    <param name="image_height" type="int" value="480" />
+
+    <param name="camera_frame_id" type="str" value="left_eye_frame" />
+  </node>
+
+  <node name="republish_right" pkg="image_transport" type="republish" args="compressed in:=/webcam_right/image_raw raw out:=/stereo/right/image_raw" />
+  <node name="republish_left" pkg="image_transport" type="republish" args="compressed in:=/webcam_left/image_raw raw out:=/stereo/left/image_raw" />
+
+  <node name="stereo_camera" pkg="OpenHMD_ROS" type="stereo_camera_node.py" />
+</launch>
