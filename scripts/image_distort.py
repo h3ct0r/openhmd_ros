@@ -56,7 +56,7 @@ class ImageLenseDistort:
         Also see the bottom of this page:
         http://www.3dtv.at/knowhow/EncodingDivx_en.aspx
         """
-        columns, rows = self.params.width, self.params.height
+        columns, rows = self.params['width'], self.params['height']
         return cv2.warpAffine(
             img,
             np.float32([[1, 0, x], [0, 1, y]]),
@@ -76,7 +76,7 @@ class ImageLenseDistort:
             _xl, _xr, _yl, _yr (int): The boundaries to crop `image` to
         """
 
-        width, height = self.params.width, self.params.height
+        width, height = self.params['width'], self.params['height']
         return img[
                _xl:width - _xr,
                _yl:height - _yr
@@ -106,30 +106,8 @@ class ImageLenseDistort:
             'yL': 0,
             'yR': 0,
             'yo': 0,
-            'yo2': 30,
-            'qcropXL': 0,
-            'cropXR': 160,
-            'cropYL': 0,
-            'cropYR': 0,
-            'cxL': 330,
-            'cxR': 330,
-            'cyL': 250,
-            'cyR': 250,
-            'fps': 15,
-            'fxL': 270,
-            'fxR': 270,
-            'fyL': 360,
-            'fyR': 360,
-            'height': 480,
-            'width': 720,
-            'xL': 0,
-            'xR': 0,
-            'xo': 20,
-            'xo2': -90,
-            'yL': 0,
-            'yR': 0,
-            'yo': 0,
-            'yo2': 30
+            'yo2': 0,
+            'qcropXL': 0
         }
 
     def process_frame(self, img):

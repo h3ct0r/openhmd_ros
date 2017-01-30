@@ -6,19 +6,36 @@
     <param name="image_height" type="int" value="480" />
 
     <param name="camera_frame_id" type="str" value="right_eye_frame" />
+    <param name="pixel_format" value="yuyv" />
   </node>
 
+  <!--
   <node pkg="usb_cam" type="usb_cam_node" name="webcam_left">
-    <param name="video_device" type="str" value="/dev/video0" />
+    <param name="video_device" type="str" value="/dev/video1" />
 
     <param name="image_width" type="int" value="640" />
     <param name="image_height" type="int" value="480" />
 
     <param name="camera_frame_id" type="str" value="left_eye_frame" />
+    <param name="pixel_format" value="yuyv" />
+  </node>
+  -->
+
+  <node name="republish_right" pkg="image_transport" type="republish" args="compressed in:=/webcam_right/image_raw raw out:=/openhmd/right/image_raw" />
+
+  <!--
+  <node name="republish_left" pkg="image_transport" type="republish" args="compressed in:=/webcam_left/image_raw raw out:=/openhmd/left/image_raw" />
+  -->
+
+  <node name="stereo_camera" pkg="openhmd_ros" type="stereo_camera_node.py" output="screen"/>
+
+  <node pkg="image_view" type="image_view" name="$(anon image_view)" args="image:=/openhmd/stereo">
   </node>
 
-  <node name="republish_right" pkg="image_transport" type="republish" args="compressed in:=/webcam_right/image_raw raw out:=/stereo/right/image_raw" />
-  <node name="republish_left" pkg="image_transport" type="republish" args="compressed in:=/webcam_left/image_raw raw out:=/stereo/left/image_raw" />
-
-  <node name="stereo_camera" pkg="OpenHMD_ROS" type="stereo_camera_node.py" />
+  <node pkg="openhmd_ros" type="relocate_resize_camera_window.py" name="relocate_resize_window">
+    <param name="current_screen_width" type="int" value="3840" />
+    <param name="window_config_width" type="int" value="2146" />
+    <param name="window_config_height" type="int" value="1062" />
+    <param name="window_name" type="str" value="/openhmd/stereo" />
+  </node>
 </launch>
