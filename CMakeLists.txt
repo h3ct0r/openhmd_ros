@@ -42,10 +42,10 @@ COMPONENTS roscpp rospy message_generation std_msgs sensor_msgs)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-   FILES
-   OculusQuat.msg
-)
+#add_message_files(
+#   FILES
+#   OculusQuat.msg
+#)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
